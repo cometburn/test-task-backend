@@ -32,4 +32,4 @@ app.use('/api/checkins', checkinRoutes);
 
 // fixturesLoader.loadFixtures();
 
-app.listen(PORT, '127.0.0.1', () => { console.log(`Server Started on Port: ${PORT}`); });
+app.listen(PORT || 8081, '127.0.0.1', () => { console.log(`Server Started on Port: ${PORT}`); });
