@@ -11,10 +11,21 @@ const PORT = process.env.PORT || 5000;
 const corsOptions = {
   origin: [process.env.API, 'http://127.0.0.1:8080', 'http://localhost:8080'],
   credentials: true,
-  optionsSuccessStatus: 200,
+  methods: 'GET, POST, PUT, DELETE',
 };
 
+app.set('trust proxy', 1);
+
 app.use(cors(corsOptions));
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Origin', process.env.API);
+  res.header('Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-HTTP-Method-Override, Set-Cookie, Cookie');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  next();
+});
+
 app.use(cookieParser());
 
 app.use(express.urlencoded({ extended: true }));
