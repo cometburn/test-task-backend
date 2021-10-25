@@ -24,6 +24,8 @@ const login = (req, res) => {
       const accessToken = token.createAccessToken(payload);
       const refreshToken = token.createRefreshToken(payload);
 
+      res.cookie('test_task', refreshToken);
+
       res.json({
         id: user.id,
         isAdmin: user.isAdmin,
