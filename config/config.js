@@ -32,9 +32,12 @@ module.exports = {
     host: process.env.DB_HOST,
     dialect: 'postgres',
     logging: false,
-    rejectUnauthorized: false,
     dialectOptions: {
       useUTC: false,
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
     },
     define: {
       schema: 'public',
