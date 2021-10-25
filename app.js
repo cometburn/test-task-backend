@@ -9,7 +9,7 @@ const cors = require('cors');
 const PORT = process.env.PORT || 5000;
 
 const corsOptions = {
-  origin: [process.env.API, 'http://127.0.0.1:8080', 'http://localhost:8080'],
+  origin: process.env.API,
   credentials: true,
   methods: 'GET, POST, PUT, DELETE',
 };
