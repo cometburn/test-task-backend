@@ -25,12 +25,14 @@ const login = (req, res) => {
       const refreshToken = token.createRefreshToken(payload);
 
       res.cookie('test_task', refreshToken, {
-        httpOnly: false,
-        maxAge: 3600000 * 5,
-        secure: false,
-        sameSite: 'none',
-        domain: process.env.DOMAIN,
+        httpOnly: true,
+        // maxAge: 3600000,
+        // secure: false,
+        // sameSite: 'none',
+        // domain: process.env.DOMAIN,
       });
+
+      // res.cookie('test_task', refreshToken);
 
       res.json({
         id: user.id,
@@ -41,7 +43,8 @@ const login = (req, res) => {
     } else {
       res.sendStatus(401);
     }
-  }).catch(() => {
+  }).catch((err) => {
+    console.log(err);
     res.sendStatus(500);
   });
 };

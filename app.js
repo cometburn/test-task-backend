@@ -4,27 +4,24 @@ const express = require('express');
 
 const app = express();
 const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
 const cors = require('cors');
 
 const PORT = process.env.PORT || 5000;
 
-const corsOptions = {
+app.use(cookieSession({ secret: process.env.REFRESH_TOKEN_SECRET }));
+
+const count = (req, res, next) => {
+  req.session.count = req.session.count || 0;
+  req.session.count += 1;
+  next();
+};
+app.use(count);
+
+app.use(cors({
   origin: process.env.API,
   credentials: true,
-  methods: 'GET, POST, PUT, DELETE',
-};
-
-app.set('trust proxy', 1);
-
-app.use(cors(corsOptions));
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Origin', process.env.API);
-  res.header('Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-HTTP-Method-Override, Set-Cookie, Cookie');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  next();
-});
+}));
 
 app.use(cookieParser());
 
