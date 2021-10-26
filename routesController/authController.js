@@ -25,7 +25,7 @@ const login = (req, res) => {
       const refreshToken = token.createRefreshToken(payload);
 
       res.cookie('test_task', refreshToken, {
-        httpOnly: true,
+        httpOnly: false,
         maxAge: 3600000 * 5,
         secure: true,
         sameSite: 'none',
