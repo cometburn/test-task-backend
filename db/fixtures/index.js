@@ -7,6 +7,8 @@ const fixtures = [
     model: 'user',
     data: {
       id: 1,
+      firstname: 'Admin',
+      lastname: 'Lastname',
       email: 'admin@test.com',
       password: '$2b$10$AOFTEzI/cgQsxC1yAeRTW.DLylUVC/Vj7gxl9cK7ZuxG0YwyjASym',
       isAdmin: true,
@@ -16,6 +18,8 @@ const fixtures = [
     model: 'user',
     data: {
       id: 2,
+      firstname: 'User1',
+      lastname: 'Lastname',
       email: 'user1@test.com',
       password: '$2b$10$AOFTEzI/cgQsxC1yAeRTW.DLylUVC/Vj7gxl9cK7ZuxG0YwyjASym',
       isAdmin: false,
@@ -25,6 +29,8 @@ const fixtures = [
     model: 'user',
     data: {
       id: 3,
+      firstname: 'User2',
+      lastname: 'Lastname',
       email: 'user2@test.com',
       password: '$2b$10$AOFTEzI/cgQsxC1yAeRTW.DLylUVC/Vj7gxl9cK7ZuxG0YwyjASym',
       isAdmin: false,
