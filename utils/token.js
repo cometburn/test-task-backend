@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken');
 const User = require('../db/models').user;
 
-const createAccessToken = (payload) => jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10s' });
+const createAccessToken = (payload) => jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '7d' });
 
-const createRefreshToken = (payload) => jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
+const createRefreshToken = (payload) => jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '30d' });
 
 const authenticateToken = async (req, res, next) => {
   const authHeader = req.headers.authorization;

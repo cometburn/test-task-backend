@@ -26,13 +26,9 @@ const login = (req, res) => {
 
       res.cookie('test_task', refreshToken, {
         httpOnly: false,
-        // maxAge: 3600000,
         secure: true,
         sameSite: 'none',
-        // domain: process.env.DOMAIN,
       });
-
-      // res.cookie('test_task', refreshToken);
 
       res.json({
         id: user.id,
