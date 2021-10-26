@@ -27,7 +27,7 @@ const login = (req, res) => {
       res.cookie('test_task', refreshToken, {
         httpOnly: false,
         maxAge: 3600000 * 5,
-        secure: true,
+        secure: false,
         sameSite: 'none',
         domain: process.env.DOMAIN,
       });
