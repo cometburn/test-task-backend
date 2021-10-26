@@ -25,10 +25,10 @@ const login = (req, res) => {
       const refreshToken = token.createRefreshToken(payload);
 
       res.cookie('test_task', refreshToken, {
-        httpOnly: true,
+        httpOnly: false,
         // maxAge: 3600000,
-        // secure: false,
-        // sameSite: 'none',
+        secure: true,
+        sameSite: 'none',
         // domain: process.env.DOMAIN,
       });
 
@@ -44,7 +44,6 @@ const login = (req, res) => {
       res.sendStatus(401);
     }
   }).catch((err) => {
-    console.log(err);
     res.sendStatus(500);
   });
 };
