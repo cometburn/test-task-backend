@@ -11,5 +11,6 @@ router.use(token.authenticateToken, (req, res, next) => {
 router.get('/', taskController.allTasks);
 router.post('/add', taskController.addTask);
 router.put('/update/:id', taskController.updateTask);
+router.delete('/delete/:id', taskController.deleteTask);
 
 module.exports = router;

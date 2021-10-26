@@ -18,10 +18,15 @@ const authenticateToken = async (req, res, next) => {
 
   if (isAccessTokenValid) {
     req.user = await User.findOne({
-      raw: true,
       where: {
         id: req.user.id,
       },
+    }).then((inst) => {
+      inst.changed('updatedAt', true);
+      inst.set('updatedAt', new Date());
+      inst.save();
+
+      return inst.dataValues;
     });
 
     return next();

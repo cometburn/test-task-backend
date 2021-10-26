@@ -33,6 +33,8 @@ const updateTask = (req, res) => {
     tasks.isCompleted = req.body.isCompleted;
     tasks.taskDate = req.body.taskDate;
     tasks.taskTime = req.body.taskTime;
+    tasks.task = req.body.task;
+    tasks.desc = req.body.desc;
     tasks.save();
 
     res.end(JSON.stringify(tasks));
@@ -41,8 +43,20 @@ const updateTask = (req, res) => {
   });
 };
 
+const deleteTask = (req, res) => {
+  Task.destroy({
+    where: {
+      id: req.params.id,
+    },
+  }).then(() => {
+    res.setHeader('Content-Type', 'text/xml charset=utf-8');
+    res.sendStatus(200);
+  });
+};
+
 module.exports = {
   allTasks,
   addTask,
   updateTask,
+  deleteTask,
 };
