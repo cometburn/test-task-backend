@@ -40,8 +40,8 @@ app.use('/api/tasks', taskRoutes);
 app.use('/api/checkins', checkinRoutes);
 app.use('/api/users', userRoutes);
 
-const fixturesLoader = require('./db/fixtures/index');
+// const fixturesLoader = require('./db/fixtures/index');
 
-fixturesLoader.loadFixtures();
+// fixturesLoader.loadFixtures();
 
 app.listen(PORT, '0.0.0.0', () => { console.log(`Server Started on Port: ${PORT}`); });
