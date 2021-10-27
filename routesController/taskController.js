@@ -21,8 +21,7 @@ const addTask = (req, res) => {
   }).then((r) => {
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(r.dataValues));
-  }).catch((err) => {
-    console.log(err);
+  }).catch(() => {
     res.sendStatus(500);
   });
 };

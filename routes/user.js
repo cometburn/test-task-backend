@@ -14,5 +14,9 @@ router.get('/:id', userController.userDetails);
 
 router.get('/:id/tasks', access.checkAdminAuthorization, userController.userTasks);
 router.get('/:id/locations', access.checkAdminAuthorization, userController.userLocations);
+router.post('/', access.checkAdminAuthorization, userController.addUser);
+
+router.put('/:id', access.checkAdminAuthorization, userController.updateUser);
+router.delete('/:id', access.checkAdminAuthorization, userController.deleteUser);
 
 module.exports = router;

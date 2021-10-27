@@ -1,12 +1,16 @@
 const Sequelize = require('sequelize');
+const bcrypt = require('bcrypt');
+
 const User = require('../db/models').user;
 const Task = require('../db/models').task;
 const Checkin = require('../db/models').checkin;
 
+const salt = bcrypt.genSaltSync(10);
+
 const allUsers = (req, res) => {
   User.findAll({
     raw: true,
-    where: { isAdmin: false },
+    where: { id: { [Sequelize.Op.not]: req.user.id } },
     attributes: {
       include: [[Sequelize.fn('COUNT', Sequelize.col('tasks.id')), 'taskCount']],
     },
@@ -16,8 +20,7 @@ const allUsers = (req, res) => {
     group: ['user.id'],
   }).then((users) => {
     res.json(users);
-  }).catch((err) => {
-    console.log(err);
+  }).catch(() => {
     res.sendStatus(500);
   });
 };
@@ -34,10 +37,8 @@ const userDetails = (req, res) => {
     }],
     group: ['user.id'],
   }).then((users) => {
-    console.log(users);
     res.json(users);
-  }).catch((err) => {
-    console.log(err);
+  }).catch(() => {
     res.sendStatus(500);
   });
 };
@@ -69,9 +70,56 @@ const userLocations = (req, res) => {
   });
 };
 
+const addUser = (req, res) => {
+  User.create({
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    email: req.body.email,
+    password: bcrypt.hashSync(req.body.password, salt),
+    isAdmin: req.body.isAdmin,
+  }).then((r) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(r.dataValues));
+  }).catch((err) => {
+    if (err.name === 'SequelizeUniqueConstraintError') {
+      res.sendStatus(400);
+    } else { res.sendStatus(500); }
+  });
+};
+
+const updateUser = (req, res) => {
+  const cond = { where: { id: req.body.id } };
+  User.findOne(cond).then((user) => {
+    user.firstname = req.body.firstname;
+    user.lastname = req.body.lastname;
+    user.email = req.body.email;
+    user.password = bcrypt.hashSync(req.body.password, salt);
+    user.isAdmin = req.body.isAdmin;
+    user.save();
+
+    res.end(JSON.stringify(user));
+  }).catch((err) => {
+    res.sendStatus(500);
+  });
+};
+
+const deleteUser = (req, res) => {
+  User.destroy({
+    where: {
+      id: req.params.id,
+    },
+  }).then(() => {
+    res.setHeader('Content-Type', 'text/xml charset=utf-8');
+    res.sendStatus(200);
+  });
+};
+
 module.exports = {
   allUsers,
   userDetails,
   userTasks,
   userLocations,
+  addUser,
+  updateUser,
+  deleteUser,
 };
