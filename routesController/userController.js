@@ -81,6 +81,7 @@ const addUser = (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(r.dataValues));
   }).catch((err) => {
+    console.log(err);
     if (err.name === 'SequelizeUniqueConstraintError') {
       res.sendStatus(400);
     } else { res.sendStatus(500); }
